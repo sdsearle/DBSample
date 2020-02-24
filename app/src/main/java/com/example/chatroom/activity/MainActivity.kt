@@ -41,7 +41,6 @@ class MainActivity : MVVMActivity<ActivityMainBinding, MainActivityViewModel>() 
                 }
             }
 
-
             /*val users = database.userDao().getUsers()*/
             /*users.addSource(database.userDao().getUsers()) { list -> list.forEach { Timber.d(it.name) }}
             users.value?.forEach { Timber.d(it.name) }*/

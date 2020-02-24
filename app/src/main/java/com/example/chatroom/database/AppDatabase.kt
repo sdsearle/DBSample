@@ -37,6 +37,7 @@ abstract class AppDatabase : RoomDatabase() {
                     ).build()
                 }
             }
+            INSTANCE?.setDatabaseCreated()
             return INSTANCE
         }
 
@@ -47,7 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     private fun setDatabaseCreated() {
-        mIsDatabaseCreated.value = true
+        mIsDatabaseCreated.postValue(true)
     }
 
     fun getDatabaseCreated(): LiveData<Boolean> {

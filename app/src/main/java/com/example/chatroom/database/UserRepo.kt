@@ -6,6 +6,7 @@ package com.example.chatroom.database
 
 import com.example.chatroom.database.entity.UserEntity
 import com.example.chatroom.extension.dependentLiveData
+import com.example.chatroom.extension.liveDataOf
 import javax.inject.Inject
 
 class UserRepo @Inject constructor(val database: AppDatabase) {
@@ -15,6 +16,8 @@ class UserRepo @Inject constructor(val database: AppDatabase) {
     }, database.userDao().getUsers().map {
         it.map { entity -> entity }
     } )*/
+
+    val list = liveDataOf(listOf(UserEntity(0, "myUser"), UserEntity(1, "User 2")))
 
     val observableUsers = dependentLiveData(database.userDao().getUsers()) {
         if (database.getDatabaseCreated().value == true) {
@@ -39,9 +42,10 @@ class UserRepo @Inject constructor(val database: AppDatabase) {
         //Send update
     }
 
-    fun get() = database.userDao().getUsers().value
+    fun get() = observableUsers //database.userDao().getUsers() //list
 
 
-    fun get(userID: Int) = database.userDao().getUserByID(userID)
+    fun get(userID: Int) =
+        observableUsers.value?.get(userID) //database.userDao().getUserByID(userID) //list.value?.get(userID) //
 
 }
